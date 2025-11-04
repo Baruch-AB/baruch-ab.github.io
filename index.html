@@ -1,10 +1,14 @@
 <!doctype html>
 <html lang="en">
+<!-- hex = 114384 78AA33 -->
 
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="A scientific research and consulting company specializing in bioprocess design, optimization, and automation.">
+  <meta name="keywords" content="Bioprocess design, Bioprocess engineering, Bioprocess automation, Sustainability solutions, Bioprocess Research, Bioprocess consulting, Circular bioeconomy, Bioprocess optimization, Bioprocess scale-up, Bioprocess technology, Bioprocess innovation, Bioprocess development, Bioprocess analytics, Bioprocess modeling, Bioprocess simulation, Bioprocess monitoring, Bioprocess control, Bioprocess data science, Bioprocess machine learning, Bioprocess AI">
   <title>Baruch AB</title>
+  <link rel="icon" href="assets/favicon_io/favicon.ico" />
 
   <style>
     :root {
@@ -90,11 +94,31 @@
       transition: all .18s ease;
     }
 
+    .tab-btn {
+      appearance: none;
+      border: 1px solid transparent;
+      background: transparent;
+      padding: 12px 14px;
+      text-align: left;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 600;
+      color: var(--muted);
+      transition: all .18s ease;
+    }
+
     .tab-btn:hover {
       transform: translateY(-2px)
     }
 
     .tab-btn[aria-selected="true"] {
+      color: var(--accent);
+      background: linear-gradient(90deg, rgba(37, 99, 235, 0.06), rgba(37, 99, 235, 0.02));
+      border-color: rgba(37, 99, 235, 0.12);
+      box-shadow: 0 4px 18px rgba(37, 99, 235, 0.06) inset;
+    }
+
+    .tab-btn-home[aria-selected="true"] {
       color: var(--accent);
       background: linear-gradient(90deg, rgba(37, 99, 235, 0.06), rgba(37, 99, 235, 0.02));
       border-color: rgba(37, 99, 235, 0.12);
@@ -116,6 +140,7 @@
 
     /* Panels */
     .panel {
+      margin-top: -12px;
       padding: 12px 18px;
       border-radius: 10px;
       min-height: 220px;
@@ -142,14 +167,28 @@
       .tabs {
         flex-direction: row;
         overflow: auto;
-        padding-bottom: 6px
+        padding-bottom: 6px;
+        padding-top: 6px;
+        padding-bottom: 12px;
+        /* FIX: Added left/right padding to give breathing room at the ends of the scroll area */
+        padding-left: 14px;
+        padding-right: 14px;
+        margin-left: -14px;
+        /* Pull the tabs back to the edge of the container's padding */
+        width: calc(100% + 28px);
+        /* Account for the negative margin */
       }
 
-      .tab-btn {
-        flex: 0 0 auto;
-        padding: 10px 14px;
-        border-radius: 8px
+      /* NEW: Use a border on the tab container to separate it from the content */
+      .tabs {
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
       }
+    }
+
+    .tab-btn {
+      flex: 0 0 auto;
+      padding: 10px 14px;
+      border-radius: 8px
     }
 
     /* Focus styles for keyboard users */
@@ -183,6 +222,15 @@
       border: 1px solid rgba(0, 0, 0, 0.05);
     }
 
+    .video {
+      max-width: 100%;
+      height: relative;
+      border-radius: 8px;
+      margin-top: 15px;
+      border: 1px solid rgba(0, 0, 0, 0.05);
+      opacity: 0.95;
+    }
+
     /* New Style: For small icons/avatars, using a utility class */
     .small-icon {
       width: 48px;
@@ -195,7 +243,7 @@
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     }
 
-    .small-icon {
+    .small-icon-large {
       width: 80px;
       height: 80px;
       object-fit: cover;
@@ -226,10 +274,10 @@
         <path d="M20 8L32 20L20 32L8 20L20 8Z" fill="var(--card)"/>
       </svg> -->
       <!-- <img src= "assets/logo.png" width="90" sizes="auto" height="90" fill="none" role="img" viewBox="0 0 40 40" aria-hidden="true"> -->
-      <img src="assets/logo.png" class="small-icon">
-      <span class="company-name"><span style='color:#114384;'>B</span><span style='color:#1C4E7A;'>A</span><span
-          style='color:#275A71;'>R</span><span style='color:#336568;'>U</span><span style='color:#3E715F;'>C</span><span
-          style='color:#497C56;'>H</span> <span style='color:#609344;'>A</span><span
+      <img src="assets/logo.png" class="small-icon-large">
+      <span class="company-name"><span style='color:#114384;'>B</span><span style='color:#1C4E7A;'>a</span><span
+          style='color:#275A71;'>r</span><span style='color:#336568;'>u</span><span style='color:#3E715F;'>c</span><span
+          style='color:#497C56;'>h</span> <span style='color:#609344;'>A</span><span
           style='color:#6B9F3B;'>B</span></span>
 
     </a>
@@ -237,7 +285,12 @@
 
   <main class="container">
     <nav class="tabs" role="tablist" aria-label="Company sections">
-      <button id="tab-1" class="tab-btn" role="tab" aria-selected="true" aria-controls="panel-1" tabindex="0">
+      <button id="tab-0" class="tab-btn" role="tab" aria-selected="true" aria-controls="panel-0" tabindex="0">
+        <span class="label">Home</span>
+        <span class="hint">Towards a Sustainable Future</span>
+      </button>
+
+      <button id="tab-1" class="tab-btn" role="tab" aria-selected="true" aria-controls="panel-1" tabindex="-1">
         <span class="label">Baruch</span>
         <span class="hint">What we do</span>
       </button>
@@ -264,6 +317,13 @@
     </nav>
 
     <section>
+      <div id="panel-0" class="panel" role="tabpanel" aria-labelledby="tab-0">
+        <!-- <h2 style="color: #2563eb;">Baruch...</h2> -->
+        <!-- <img src="assets/sustain.jpg" class="small-img"></img> -->
+        <video loop muted autoplay playsinline poster="assets/sustain.jpg" class="video">
+          <source src="assets/intro_video.mp4" type="video/mp4">
+        </video>
+      </div>
       <div id="panel-1" class="panel" role="tabpanel" aria-labelledby="tab-1">
         <h2 style="color: #2563eb;">What we do...</h2>
         <br>
@@ -293,7 +353,7 @@
           expertise to support your innovation journey.</h3>
         <h3>
           <ul>Bioprocess Engineering & Consulting</ul>
-          <ul>
+          <ul style="list-style-type:'⚘  ';">
             <li>Process design, optimization, and scale-up.</li>
             <li>Biomass conversion and biofuels development.</li>
             <li>Performance & Accessibility Audits.</li>
@@ -304,7 +364,7 @@
           <br>
 
           <ul>Automation & Digital Solutions</ul>
-          <ul>
+          <ul style="list-style-type:'⎌  ';">
             <li>Process automation for improved efficiency and reliability.</li>
             <li>Data analytics, modeling, and visualization.</li>
             <li>Machine learning and AI applications in biotechnology and engineering.</li>
@@ -314,7 +374,7 @@
 
           <br>
           <ul>Sustainable Bioeconomy Consulting</ul>
-          <ul>
+          <ul style="list-style-type:'♲  ';">
             <li>Circular economy strategies for industries and municipalities.</li>
             <li>Techno-economic and environmental assessments.</li>
             <li>Roadmaps for green innovation and resource recovery.</li>
@@ -333,10 +393,12 @@
           <br>
           <br>
           Opportunities include:
-          <ul>Research partnerships.</ul>
-          <ul>Industry collaborations.</ul>
-          <ul>Internships and student projects.</ul>
-          <ul>Joint innovation initiatives.</ul>
+          <ul style="list-style-type:'⎆  ';">
+            <li>Research partnerships.</li>
+            <li>Industry collaborations.</li>
+            <li>Internships and student projects.</li>
+            <li>Joint innovation initiatives.</li>
+          </ul>
           <br>
           <br>
           If you are interested in joining forces with us, we'd love to hear from you.
@@ -358,19 +420,19 @@
         <br>
         <h2 style="color: #2563eb;">Our Values...</h2>
         <h3>
-          <ul>Innovation
+          <ul i class="bi bi-graph-up-arrow"> Innovation
             <ul>Leveraging creativity and technology to drive meaningful progress.</ul>
           </ul>
 
-          <ul>Sustainability
+          <ul>♲ Sustainability
             <ul>Embedding environmental responsibility in every solution.</ul>
           </ul>
 
-          <ul>Integrity
+          <ul>✓ Integrity
             <ul>Upholding transparency, trust, and ethical practices.</ul>
           </ul>
 
-          <ul>Collaboration
+          <ul>☞ Collaboration
             <ul>Building partnerships that foster knowledge sharing and growth.</ul>
           </ul>
         </h3>
@@ -383,14 +445,25 @@
         <h3><strong style="color: #2563eb;">Baruch AB</strong>
           <br>
           Kvillepiren 12,<br>
-          Gothenburg, Sweden, 41779.
-        </h3><br>
+          Gothenburg, Sweden, 41779.<br>
+        </h3>
+        <h2>
+          <a href="https://www.linkedin.com/company/baruch-ab/" target="_blank" rel="noopener noreferrer">
+            <i class="bi bi-linkedin"></i>
+          </a>
+        </h2>
+        <br>
         <h3><strong style="color: #2563eb;">Bahiru Tsegaye Ayalew</strong><br>
           CEO & Founder, Baruch AB.<br>
           <h3>Email: <a href="mailto:bahiru@baruch.se">bahiru@baruch.se</a><br>
             Phone: <a href="tel:+46728318144"></a>+46-728318144</h3>
+          <h2>
+            <a href="https://www.linkedin.com/in/bahiru-tsegaye-5b0432a4" target="_blank" rel="noopener noreferrer">
+              <i class="bi bi-linkedin"></i>
+            </a>
+          </h2>
           <br><br><br>
-          <h4> We are currently committed to constantly update our webpage and increase our social media presence.</h4>
+          <h4> We are currenly committed to constantly update our webpage and increase our social media presence.</h4>
       </div>
     </section>
   </main>
@@ -438,3 +511,6 @@
 </body>
 
 </html>
+
+<link rel="apple-touch-icon" href="assets/favicon_io/apple-touch-icon.png">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
