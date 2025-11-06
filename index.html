@@ -5,8 +5,10 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="description" content="A scientific research and consulting company specializing in bioprocess design, optimization, and automation.">
-  <meta name="keywords" content="Bioprocess design, Bioprocess engineering, Bioprocess automation, Sustainability solutions, Bioprocess Research, Bioprocess consulting, Circular bioeconomy, Bioprocess optimization, Bioprocess scale-up, Bioprocess technology, Bioprocess innovation, Bioprocess development, Bioprocess analytics, Bioprocess modeling, Bioprocess simulation, Bioprocess monitoring, Bioprocess control, Bioprocess data science, Bioprocess machine learning, Bioprocess AI">
+  <meta name="description"
+    content="A scientific research and consulting company specializing in bioprocess design, optimization, and automation.">
+  <meta name="keywords"
+    content="Bioprocess design, Bioprocess engineering, Bioprocess automation, Sustainability solutions, Bioprocess Research, Bioprocess consulting, Circular bioeconomy, Bioprocess optimization, Bioprocess scale-up, Bioprocess technology, Bioprocess innovation, Bioprocess development, Bioprocess analytics, Bioprocess modeling, Bioprocess simulation, Bioprocess monitoring, Bioprocess control, Bioprocess data science, Bioprocess machine learning, Bioprocess AI">
   <title>Baruch AB</title>
   <link rel="icon" href="assets/favicon_io/favicon.ico" />
 
@@ -263,6 +265,56 @@
       float: left;
       /* Helps arrange text next to images */
     }
+
+    .iframe-wrapper {
+      max-width: 640px;
+      /* Sets a maximum width for the form on large screens */
+      margin: 20px auto;
+      /* Centers the form horizontally and adds vertical spacing */
+    }
+
+    #duplicate-paragraphs {
+      display: flex;
+      /* CRITICAL: Enables side-by-side layout */
+      gap: 40px;
+      /* Space between the two paragraphs */
+      margin: 40px 0;
+      width: 100%;
+      /* Ensure it spans the container width */
+    }
+
+    /* Style for the individual paragraphs */
+    .original-paragraph,
+    .shifted-paragraph {
+      /* Each paragraph takes up roughly half the available space */
+      flex-basis: 50%;
+      max-width: 50%;
+      /* Ensures they don't try to grow too much */
+      margin: 0;
+      /* Remove default margins for cleaner layout */
+      padding: 0;
+      color: #374151;
+    }
+
+    /* Optional: Style the original paragraph */
+    .original-paragraph {
+      font-weight: 600;
+    }
+
+    /* Responsive adjustment for small screens */
+    @media (max-width: 600px) {
+      #duplicate-paragraphs {
+        flex-direction: column;
+        /* Stack paragraphs vertically on mobile */
+        gap: 20px;
+      }
+
+      .original-paragraph,
+      .shifted-paragraph {
+        max-width: 100%;
+        /* Let them use full width on mobile */
+      }
+    }
   </style>
 </head>
 
@@ -440,30 +492,37 @@
 
       <div id="panel-5" class="panel" role="tabpanel" aria-labelledby="tab-5" hidden>
         <h2 style="color: #2563eb;">Contact us...</h2>
-        <h3>We'd love to hear from you.</h3>
-        <br>
-        <h3><strong style="color: #2563eb;">Baruch AB</strong>
-          <br>
-          Kvillepiren 12,<br>
-          Gothenburg, Sweden, 41779.<br>
-        </h3>
-        <h2>
-          <a href="https://www.linkedin.com/company/baruch-ab/" target="_blank" rel="noopener noreferrer">
-            <i class="bi bi-linkedin"></i>
-          </a>
-        </h2>
-        <br>
-        <h3><strong style="color: #2563eb;">Bahiru Tsegaye Ayalew</strong><br>
-          CEO & Founder, Baruch AB.<br>
-          <h3>Email: <a href="mailto:bahiru@baruch.se">bahiru@baruch.se</a><br>
-            Phone: <a href="tel:+46728318144"></a>+46-728318144</h3>
-          <h2>
-            <a href="https://www.linkedin.com/in/bahiru-tsegaye-5b0432a4" target="_blank" rel="noopener noreferrer">
+        <h3>We'd love to hear from you.<br>
+        You can use the contact form below to reach us directly.</h3>
+        <div id="duplicate-paragraphs">
+          <h3 class="original-paragraph"><strong style="color: #2563eb;">Baruch AB</strong>
+            <br>
+            Kvillepiren 12,<br>
+            Gothenburg, Sweden, 41779.<br>
+            <a href="https://www.linkedin.com/company/baruch-ab/" target="_blank" rel="noopener noreferrer">
               <i class="bi bi-linkedin"></i>
             </a>
-          </h2>
-          <br><br><br>
-          <h4> We are currenly committed to constantly update our webpage and increase our social media presence.</h4>
+          </h3>
+
+          <br>
+          <h3 class="shifted-paragraph"><strong style="color: #2563eb;">Bahiru Tsegaye Ayalew</strong><br>
+            CEO & Founder, Baruch AB.<br>
+            Email: <a href="mailto:bahiru@baruch.se">bahiru@baruch.se</a><br>
+            Phone: <a href="tel:+46728318144"></a>+46-728318144<br>
+              <a href="https://www.linkedin.com/in/bahiru-tsegaye-5b0432a4" target="_blank" rel="noopener noreferrer">
+                <i class="bi bi-linkedin"></i>
+              </a>
+            </h3>
+        </div>
+        <br>
+        <img src="assets/LinkedinCover.png" class="small-img"></img>
+        <div class="iframe-wrapper">
+          <iframe
+            src="https://docs.google.com/forms/d/e/1FAIpQLSfTavl50p_J79bT7w6VyMRF_W9DE6Nn0KLePH2O9ctlV5AagQ/viewform?embedded=true"
+            width="100%" height="1000" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+        </div>
+        <!-- <p>Please use the form below to contact us directly.</p> -->
+        <h4> We are currenly committed to constantly update our webpage and increase our social media presence.</h4>
       </div>
     </section>
   </main>
