@@ -1,575 +1,1038 @@
 <!doctype html>
 <html lang="en">
-<!-- hex = 114384 78AA33 -->
-
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="description"
-    content="A scientific research and consulting company specializing in bioprocess design, optimization, and automation.">
-  <meta name="keywords"
-    content="Bioprocess design, Bioprocess engineering, Bioprocess automation, Sustainability solutions, Bioprocess Research, Bioprocess consulting, Circular bioeconomy, Bioprocess optimization, Bioprocess scale-up, Bioprocess technology, Bioprocess innovation, Bioprocess development, Bioprocess analytics, Bioprocess modeling, Bioprocess simulation, Bioprocess monitoring, Bioprocess control, Bioprocess data science, Bioprocess machine learning, Bioprocess AI">
-  <title>Baruch AB</title>
+  <meta name="description" content="A scientific research and consulting company specializing in bioprocess design, optimization, and automation.">
+  <title>Baruch AB | Towards a Sustainable Future</title>
+  
   <link rel="icon" href="assets/favicon_io/favicon.ico" />
+  <link rel="apple-touch-icon" href="assets/favicon_io/apple-touch-icon.png">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 
   <style>
+    /* =========================================
+       CSS Variables & Dynamic Theming
+       ========================================= */
     :root {
-      --bg: #b7f0e3;
-      --card: #ffffff;
+      /* Vibrant Light Mode */
+      --bg-base: #f0f4f8;
+      --bg-gradient: radial-gradient(circle at 10% 10%, #dbeafe 0%, transparent 40%),
+                     radial-gradient(circle at 90% 90%, #d1fae5 0%, transparent 40%),
+                     radial-gradient(circle at 50% 50%, #eff6ff 0%, #f0f4f8 100%);
+      
+      --container-bg: rgba(255, 255, 255, 0.45);
+      --container-border: rgba(255, 255, 255, 0.7);
+      
+      --sidebar-bg: rgba(255, 255, 255, 0.35);
+      --sidebar-border: rgba(0, 0, 0, 0.05);
+      
+      --card-bg: rgba(255, 255, 255, 0.55);
+      --card-border: rgba(255, 255, 255, 0.8);
+      
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      
       --accent: #2563eb;
-      --muted: #6b7280;
-      --radius: 12px;
-      --gap: 12px;
-      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      --accent-bg: #2563eb;
+      --accent-text: #ffffff;
+      --accent-glow: rgba(37, 99, 235, 0.25);
+      
+      --tab-hover: rgba(37, 99, 235, 0.08);
+      --divider-color: rgba(0, 0, 0, 0.08);
+      --shadow: 0 20px 50px rgba(0, 0, 0, 0.04);
+
+      --radius: 24px;
+      font-family: "Inter", -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif;
     }
 
-    * {
-      box-sizing: border-box
+    [data-theme="dark"] {
+      /* Deep Atmospheric Dark Mode */
+      --bg-base: #060913;
+      --bg-gradient: radial-gradient(circle at 20% 0%, rgba(37, 99, 235, 0.22), transparent 45%),
+                     radial-gradient(circle at 80% 100%, rgba(16, 185, 129, 0.15), transparent 45%),
+                     radial-gradient(circle at 50% 50%, #080d1a 0%, #03050a 100%);
+      
+      --container-bg: rgba(15, 23, 42, 0.45);
+      --container-border: rgba(255, 255, 255, 0.08);
+      
+      --sidebar-bg: rgba(255, 255, 255, 0.03);
+      --sidebar-border: rgba(255, 255, 255, 0.05);
+      
+      --card-bg: rgba(255, 255, 255, 0.03);
+      --card-border: rgba(255, 255, 255, 0.06);
+      
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      
+      --accent: #3b82f6;
+      --accent-bg: #2563eb;
+      --accent-text: #ffffff;
+      --accent-glow: rgba(59, 130, 246, 0.4);
+      
+      --tab-hover: rgba(255, 255, 255, 0.06);
+      --divider-color: rgba(255, 255, 255, 0.08);
+      --shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+    }
+
+    /* =========================================
+       Global Reset & Layout
+       ========================================= */
+    * { box-sizing: border-box; }
+
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
     }
 
     body {
-      margin: 0;
-      min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      background: linear-gradient(180deg, var(--bg), #eefbff 60%);
-      padding: 40px 28px;
-      gap: 32px;
+      background-color: var(--bg-base);
+      background-image: var(--bg-gradient);
+      color: var(--text-main);
+      padding: 12px 24px 24px 24px;
+      transition: background 0.4s ease, color 0.4s ease;
+      line-height: 1.6;
     }
 
-    /* Header */
+    a { color: var(--accent); text-decoration: none; transition: 0.2s ease; }
+    a:hover { filter: brightness(1.2); text-decoration: underline; }
+
+    /* =========================================
+       Header
+       ========================================= */
     .site-header {
       width: 100%;
-      max-width: 1600px;
-      /* Matched to container */
+      max-width: 1700px;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      padding: 6px 4px 14px 4px;
+      flex-shrink: 0;
     }
 
     .logo-link {
       display: inline-flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
       text-decoration: none;
-      color: #1e293b;
-      font-weight: 700;
-      font-size: 27px;
-      transition: color .18s ease;
+      font-weight: 800;
+      font-size: 19px;
+      letter-spacing: -0.5px;
     }
 
-    .logo-link:hover {
-      color: var(--accent);
+    .logo-icon {
+      width: 30px;
+      height: 30px;
+      object-fit: cover;
+      border-radius: 50%;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
     }
 
+    /* =========================================
+       Main Outer Glass Container
+       ========================================= */
     .container {
       width: 100%;
-      max-width: 1600px;
-      min-height: 600px;
-      background: var(--card);
+      max-width: 1700px;
+      flex-grow: 1;
+      height: calc(100vh - 70px);
+      background: var(--container-bg);
+      border: 1px solid var(--container-border);
       border-radius: var(--radius);
-      box-shadow: 0 6px 30px rgba(27, 31, 35, 0.08);
-      padding: 40px;
-      display: grid;
-      grid-template-columns: 280px 1fr;
-      gap: 40px;
-      align-items: start;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
+      padding: 20px;
+      display: flex;
+      gap: 20px;
+      overflow: hidden;
+      position: relative;
     }
 
+    /* =========================================
+       Sidebar Navigation
+       ========================================= */
+    .sidebar {
+      width: 280px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      background: var(--sidebar-bg);
+      border: 1px solid var(--sidebar-border);
+      border-radius: 18px;
+      padding: 10px;
+      transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      flex-shrink: 0;
+    }
 
-    /* Tab list (vertical on wide, horizontal on small) */
+    .sidebar.collapsed {
+      width: 68px;
+    }
+
+    .divider {
+      height: 1px;
+      background-color: var(--divider-color);
+      margin: 6px 0;
+      width: 100%;
+    }
+
+    /* Tabs List */
     .tabs {
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 4px;
+      flex-grow: 1;
+      overflow-y: auto;
+      overflow-x: hidden;
+      scrollbar-width: none;
     }
+    .tabs::-webkit-scrollbar { display: none; }
 
+    /* Single Tab Button */
     .tab-btn {
       appearance: none;
       border: 1px solid transparent;
       background: transparent;
-      padding: 12px 14px;
-      text-align: left;
-      border-radius: 10px;
+      padding: 10px 12px;
+      border-radius: 12px;
       cursor: pointer;
-      font-weight: 600;
-      color: var(--muted);
-      transition: all .18s ease;
-    }
-
-    .tab-btn {
-      appearance: none;
-      border: 1px solid transparent;
-      background: transparent;
-      padding: 12px 14px;
-      text-align: left;
-      border-radius: 10px;
-      cursor: pointer;
-      font-weight: 600;
-      color: var(--muted);
-      transition: all .18s ease;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+      white-space: nowrap;
+      width: 100%;
+      overflow: hidden;
     }
 
     .tab-btn:hover {
-      transform: translateY(-2px)
+      background: var(--tab-hover);
+      color: var(--text-main);
     }
 
+    /* Active Selection Styling (Rich Blue Accent) */
     .tab-btn[aria-selected="true"] {
-      color: var(--accent);
-      background: linear-gradient(90deg, rgba(37, 99, 235, 0.06), rgba(37, 99, 235, 0.02));
-      border-color: rgba(37, 99, 235, 0.12);
-      box-shadow: 0 4px 18px rgba(37, 99, 235, 0.06) inset;
+      color: var(--accent-text);
+      background: var(--accent-bg);
+      box-shadow: 0 4px 14px var(--accent-glow);
     }
 
-    .tab-btn-home[aria-selected="true"] {
-      color: var(--accent);
-      background: linear-gradient(90deg, rgba(37, 99, 235, 0.06), rgba(37, 99, 235, 0.02));
-      border-color: rgba(37, 99, 235, 0.12);
-      box-shadow: 0 4px 18px rgba(37, 99, 235, 0.06) inset;
+    /* Perfectly Centered Sidebar Icons */
+    .nav-icon {
+      font-size: 18px;
+      width: 24px;
+      height: 24px;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      flex-shrink: 0;
+      margin: 0 auto;
     }
 
+    .sidebar:not(.collapsed) .nav-icon {
+      margin: 0;
+    }
+
+    /* Fixed Text Styling - Prevents skewing/squeezing */
+    .tab-text {
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      white-space: nowrap;
+      transition: opacity 0.2s ease;
+      text-align: left;
+    }
+
+    .sidebar.collapsed .tab-text {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    /* Clean, unskewed sidebar text */
     .tab-btn .label {
-      display: block;
-      font-size: 15px
+      font-size: 15px;
+      font-weight: 600;
+      line-height: 1.3;
+      font-style: normal;
+      letter-spacing: normal;
+    }
+    
+    .tab-btn .hint {
+      font-size: 13px;
+      margin-top: 1px;
+      opacity: 0.75;
+      font-weight: 400;
+      font-style: normal;
+      letter-spacing: normal;
     }
 
-    .tab-btn .hint {
-      display: block;
-      font-weight: 400;
-      font-size: 13px;
-      color: var(--muted);
-      opacity: .8
+    /* Bottom Action Bar (Theme + Collapse Toggle) */
+    .bottom-actions {
+      margin-top: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
     }
+
+    .action-btn {
+      width: 100%;
+      appearance: none;
+      border: 1px solid transparent;
+      background: transparent;
+      padding: 10px 12px;
+      border-radius: 12px;
+      cursor: pointer;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      transition: background 0.2s ease, color 0.2s ease;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+
+    .action-btn:hover {
+      background: var(--tab-hover);
+      color: var(--text-main);
+    }
+
+    /* =========================================
+       Main Content Area
+       ========================================= */
+    .content-area {
+      flex-grow: 1;
+      height: 100%;
+      overflow-y: auto;
+      padding-right: 6px;
+    }
+
+    .content-area::-webkit-scrollbar { width: 6px; }
+    .content-area::-webkit-scrollbar-track { background: transparent; }
+    .content-area::-webkit-scrollbar-thumb { background: var(--divider-color); border-radius: 10px; }
 
     /* Panels */
     .panel {
-      margin-top: -12px;
-      padding: 12px 18px;
-      border-radius: 10px;
-      min-height: 220px;
-      background: linear-gradient(180deg, rgba(15, 23, 42, 0.02), rgba(255, 255, 255, 0));
-      border: 1px solid rgba(15, 23, 42, 0.03);
+      padding: 32px;
+      border-radius: 18px;
+      min-height: 100%;
+      background: transparent;
+      animation: fadeIn 0.35s ease-out forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .panel h2 {
       margin-top: 0;
-      margin-bottom: 8px
+      font-size: 34px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      color: var(--accent);
+      margin-bottom: 20px;
     }
 
-    .panel p {
-      margin-top: 0;
-      color: #374151
+    .panel h3 { 
+      font-size: 20px; 
+      font-weight: 400; 
+      line-height: 1.8; 
+      color: var(--text-main);
+      margin-bottom: 24px;
     }
+    .panel h3 strong { font-weight: 600; }
 
-    /* Responsive: move tabs to top on small screens */
-    @media (max-width:760px) {
-      .container {
-        grid-template-columns: 1fr;
-      }
+    /* =========================================
+   Fluted Glass Frame for Side Images
+   ========================================= */
+.fluted-img-wrapper {
+  position: relative;
+  width: 280px; /* Fixed width matching the side image */
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--card-border);
+  flex-shrink: 0;
+  display: flex; /* Ensures stretch alignment works seamlessly */
+}
 
-      .tabs {
-        flex-direction: row;
-        overflow: auto;
-        padding-bottom: 6px;
-        padding-top: 6px;
-        padding-bottom: 12px;
-        /* FIX: Added left/right padding to give breathing room at the ends of the scroll area */
-        padding-left: 14px;
-        padding-right: 14px;
-        margin-left: -14px;
-        /* Pull the tabs back to the edge of the container's padding */
-        width: calc(100% + 28px);
-        /* Account for the negative margin */
-      }
+/* Base Image */
+.card-side-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
 
-      /* NEW: Use a border on the tab container to separate it from the content */
-      .tabs {
-        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-      }
-    }
+/* Fluted / Reeded Glass Overlay */
+.fluted-glass-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  
+  /* 1. Refraction Blur & High-Contrast Light Distortion */
+  backdrop-filter: blur(10px) contrast(135%) brightness(108%);
+  -webkit-backdrop-filter: blur(10px) contrast(135%) brightness(108%);
 
-    .tab-btn {
-      flex: 0 0 auto;
-      padding: 10px 14px;
-      border-radius: 8px
-    }
+  /* 2. Vertical Ribbed Ridges (Light & Shadow Gradient) */
+  background: repeating-linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.22) 0px,
+    rgba(255, 255, 255, 0.04) 4px,
+    rgba(0, 0, 0, 0.38) 8px,
+    rgba(255, 255, 255, 0.22) 12px
+  );
+  
+  /* Edge highlight reflection */
+  box-shadow: inset 0 0 15px rgba(255, 255, 255, 0.2);
+  transition: opacity 0.3s ease;
+}
 
-    /* Focus styles for keyboard users */
-    .tab-btn:focus {
-      outline: 3px solid rgba(37, 99, 235, 0.14);
-      outline-offset: 2px
-    }
+/* Interactive Hover state */
+.fluted-img-wrapper:hover .fluted-glass-layer {
+  backdrop-filter: blur(6px) contrast(120%) brightness(110%);
+  -webkit-backdrop-filter: blur(6px) contrast(120%) brightness(110%);
+}
 
-    /* Small utility */
-    .sub {
-      font-size: 13px;
-      color: var(--muted)
-    }
+/* Responsive adjustment for small screens */
+@media (max-width: 850px) {
+  .fluted-img-wrapper {
+    width: 100%;
+    height: 180px;
+  }
+}
 
-    .panel img :not(.small-icon, .small-img) {
-      max-width: 100%;
-      height: auto;
-      border-radius: 8px;
-      margin-top: 15px;
-      border: 1px solid rgba(0, 0, 0, 0.05);
-    }
-
-    .small-img {
-      max-width: 100%;
-      height: 200px;
-      display: block;
-      margin: auto;
-      width: auto;
-      border-radius: 8px;
-      margin-top: 15px;
-      border: 1px solid rgba(0, 0, 0, 0.05);
+    /* Video Player Fit */
+    .video-container {
+      width: 100%;
+      height: 100%;
+      max-height: 700px;
+      border-radius: 16px;
+      overflow: hidden;
+      background: #000;
+      box-shadow: var(--shadow);
     }
 
     .video {
-      max-width: 100%;
-      height: relative;
-      border-radius: 8px;
-      margin-top: 15px;
-      border: 1px solid rgba(0, 0, 0, 0.05);
-      opacity: 0.95;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
     }
 
-    /* New Style: For small icons/avatars, using a utility class */
-    .small-icon {
-      width: 48px;
-      height: 48px;
+    /* .service-category {
+      font-size: 22px;
+      font-weight: 600;
+      margin-top: 36px;
+      margin-bottom: 14px;
+      color: var(--text-main);
+    }
+
+    ul.custom-list {
+      list-style: none;
+      padding-left: 0;
+      margin-bottom: 28px;
+    }
+
+    ul.custom-list li {
+      position: relative;
+      padding-left: 32px;
+      margin-bottom: 10px;
+      font-size: 18px;
+      line-height: 1.6;
+    }
+
+    ul.custom-list li i {
+      position: absolute;
+      left: 0;
+      top: 3px;
+      color: var(--accent);
+      font-size: 18px;
+    } */
+    /* =========================================
+       Cards for Service & Bullet Lists
+       ========================================= */
+    .service-category {
+      font-size: 20px;
+      font-weight: 700;
+      margin-top: 32px;
+      margin-bottom: 12px;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    ul.custom-list {
+      list-style: none;
+      padding: 20px 24px;
+      margin-bottom: 28px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    /* Subtle elevation on hover */
+    ul.custom-list:hover {
+      transform: translateY(-2px);
+      border-color: rgba(37, 99, 235, 0.3);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+    }
+
+    ul.custom-list li {
+      position: relative;
+      padding-left: 32px;
+      padding-top: 10px;
+      padding-bottom: 10px;
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--text-main);
+      border-bottom: 1px solid var(--divider-color);
+    }
+
+    /* Remove border on the last item */
+    ul.custom-list li:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    ul.custom-list li:first-child {
+      padding-top: 0;
+    }
+
+    ul.custom-list li i {
+      position: absolute;
+      left: 0;
+      top: 12px;
+      color: var(--accent);
+      font-size: 18px;
+    }
+
+    ul.custom-list li:first-child i {
+      top: 2px;
+    }
+
+    .small-img {
+      width: 100%;
+      max-height: 480px;
       object-fit: cover;
-      border-radius: 50%;
-      /* Makes them circular */
-      float: left;
-      margin: 5px 15px 10px 0;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      border-radius: 14px;
+      margin-top: 20px;
+      box-shadow: var(--shadow);
     }
 
-    .small-icon-large {
-      width: 80px;
-      height: 80px;
-      object-fit: cover;
-      border-radius: 50%;
-      /* Makes them circular */
-      float: left;
-      margin: 5px 15px 10px 0;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    }
-
-    .service-item-img {
-      width: 80px;
-      height: 80px;
-      object-fit: cover;
-      margin: 0;
-      margin-right: 15px;
-      float: left;
-      /* Helps arrange text next to images */
-    }
-
-    .iframe-wrapper {
-      max-width: 640px;
-      /* Sets a maximum width for the form on large screens */
-      margin: 20px auto;
-      /* Centers the form horizontally and adds vertical spacing */
-    }
-
+    /* Contact Details Block */
     #duplicate-paragraphs {
       display: flex;
-      /* CRITICAL: Enables side-by-side layout */
-      gap: 40px;
-      /* Space between the two paragraphs */
-      margin: 40px 0;
-      width: 100%;
-      /* Ensure it spans the container width */
+      gap: 32px;
+      margin: 32px 0;
+      background: var(--card-bg);
+      padding: 28px;
+      border-radius: 16px;
+      border: 1px solid var(--card-border);
     }
 
-    /* Style for the individual paragraphs */
-    .original-paragraph,
-    .shifted-paragraph {
-      /* Each paragraph takes up roughly half the available space */
-      flex-basis: 50%;
-      max-width: 50%;
-      /* Ensures they don't try to grow too much */
-      margin: 0;
-      /* Remove default margins for cleaner layout */
-      padding: 0;
-      color: #374151;
+    .contact-block { flex: 1; }
+    .contact-block h3 { margin: 0; font-size: 19px; }
+
+    /* Embedded Google Forms Container */
+    .iframe-wrapper {
+      max-width: 100%;
+      border-radius: 16px;
+      overflow: hidden;
+      background: #ffffff;
+      padding: 12px;
+      box-shadow: var(--shadow);
+      margin-top: 32px;
     }
 
-    /* Optional: Style the original paragraph */
-    .original-paragraph {
-      font-weight: 600;
+    .iframe-wrapper iframe {
+      display: block;
+      border-radius: 8px;
     }
 
-    /* Responsive adjustment for small screens */
-    @media (max-width: 600px) {
-      #duplicate-paragraphs {
-        flex-direction: column;
-        /* Stack paragraphs vertically on mobile */
-        gap: 20px;
-      }
+   /* =========================================
+   Mobile Layout Fix (Portrait & Landscape Phones)
+   ========================================= */
+@media screen and (max-width: 1024px) and (max-height: 600px), 
+       screen and (max-width: 850px) {
 
-      .original-paragraph,
-      .shifted-paragraph {
-        max-width: 100%;
-        /* Let them use full width on mobile */
-      }
-    }
+  /* 1. Unlock document scrolling */
+  html, body {
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    height: auto !important;
+    min-height: 100vh;
+  }
+
+  body {
+    padding: 6px 8px 16px 8px;
+  }
+
+  /* 2. Container adapts vertically */
+  .container {
+    flex-direction: column !important;
+    height: auto !important;
+    min-height: auto;
+    padding: 10px;
+    gap: 10px;
+    overflow: visible !important;
+  }
+
+  /* 3. Top Sticky Header Bar */
+  .sidebar {
+    width: 100% !important;
+    min-width: 100% !important;
+    height: auto !important;
+    flex-direction: row !important;
+    align-items: center;
+    padding: 4px 6px;
+    position: sticky;
+    top: 4px;
+    z-index: 100;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
+
+  .sidebar .divider,
+  #collapseToggle { 
+    display: none !important; 
+  }
+
+  /* 4. Horizontal Scrollable Container for Tabs */
+  .tabs {
+    flex-direction: row !important;
+    display: flex !important;
+    gap: 6px;
+    width: auto;
+    max-width: calc(100% - 48px); /* Leaves room for theme button */
+    overflow-x: auto !important;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    padding-bottom: 2px;
+  }
+  .tabs::-webkit-scrollbar { display: none; }
+
+  /* 5. Fix for Single Button Full-Width Expansion */
+  .tab-btn {
+    width: auto !important;
+    flex: 0 0 auto !important;
+    padding: 8px 12px !important;
+    justify-content: center;
+    min-width: 44px;
+  }
+
+  .nav-icon {
+    font-size: 16px;
+    width: 18px;
+    height: 18px;
+  }
+
+  /* Hide long tab subtitle labels on mobile */
+  .tab-text { display: none !important; }
+
+  .bottom-actions {
+    flex-direction: row !important;
+    margin-top: 0 !important;
+    margin-left: auto;
+    flex-shrink: 0;
+  }
+
+  .action-btn {
+    padding: 8px;
+    width: auto !important;
+    flex: 0 0 auto !important;
+  }
+
+  /* 6. Content Panels */
+  .content-area {
+    width: 100% !important;
+    height: auto !important;
+    overflow: visible !important;
+    padding-right: 0;
+  }
+
+  .panel { 
+    padding: 14px 10px !important; 
+    min-height: auto;
+  }
+}
   </style>
 </head>
 
 <body>
+  <!-- Simplified Top Bar -->
   <header class="site-header">
     <a href="#" class="logo-link" aria-label="Company Homepage">
-      <!-- <svg width="32" height="32" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
-        <path d="M20 0L40 20L20 40L0 20L20 0Z" fill="var(--accent)"/>
-        <path d="M20 8L32 20L20 32L8 20L20 8Z" fill="var(--card)"/>
-      </svg> -->
-      <!-- <img src= "assets/logo.png" width="90" sizes="auto" height="90" fill="none" role="img" viewBox="0 0 40 40" aria-hidden="true"> -->
-      <img src="assets/logo.png" class="small-icon-large">
-      <span class="company-name"><span style='color:#114384;'>B</span><span style='color:#1C4E7A;'>a</span><span
-          style='color:#275A71;'>r</span><span style='color:#336568;'>u</span><span style='color:#3E715F;'>c</span><span
-          style='color:#497C56;'>h</span> <span style='color:#609344;'>A</span><span
-          style='color:#6B9F3B;'>B</span></span>
-
+      <img src="assets/logo.png" class="logo-icon" alt="Baruch Logo" onerror="this.style.display='none'">
+      <span class="company-name">
+        <span style='color:#114384;'>B</span><span style='color:#1C4E7A;'>a</span><span style='color:#275A71;'>r</span><span style='color:#336568;'>u</span><span style='color:#3E715F;'>c</span><span style='color:#497C56;'>h</span> 
+        <span style='color:#609344;'>A</span><span style='color:#6B9F3B;'>B</span>
+      </span>
     </a>
   </header>
 
+  <!-- Enclosing Floating UI Box -->
   <main class="container">
-    <nav class="tabs" role="tablist" aria-label="Company sections">
-      <button id="tab-0" class="tab-btn" role="tab" aria-selected="true" aria-controls="panel-0" tabindex="0">
-        <span class="label">Home</span>
-        <span class="hint">Towards a Sustainable Future</span>
-      </button>
+    
+    <!-- Floating Sidebar Navigation -->
+    <aside class="sidebar" id="sidebar">
+      
+      <!-- Nav Tabs -->
+      <nav class="tabs" role="tablist" aria-label="Company sections">
+        <button id="tab-0" class="tab-btn" role="tab" aria-selected="true" aria-controls="panel-0" tabindex="0" title="Home">
+          <i class="bi bi-house nav-icon"></i>
+          <span class="tab-text">
+            <span class="label">Home</span>
+            <span class="hint">Towards a Sustainable Future</span>
+          </span>
+        </button>
 
-      <button id="tab-1" class="tab-btn" role="tab" aria-selected="true" aria-controls="panel-1" tabindex="-1">
-        <span class="label">Baruch</span>
-        <span class="hint">What we do</span>
-      </button>
+        <button id="tab-1" class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-1" tabindex="-1" title="Baruch">
+          <i class="bi bi-shield-check nav-icon"></i>
+          <span class="tab-text">
+            <span class="label">Baruch</span>
+            <span class="hint">What we do</span>
+          </span>
+        </button>
 
-      <button id="tab-2" class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-2" tabindex="-1">
-        <span class="label">Services at Baruch</span>
-        <span class="hint">What we offer</span>
-      </button>
+        <button id="tab-2" class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-2" tabindex="-1" title="Services">
+          <i class="bi bi-gear nav-icon"></i>
+          <span class="tab-text">
+            <span class="label">Services</span>
+            <span class="hint">What we offer</span>
+          </span>
+        </button>
 
-      <button id="tab-3" class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-3" tabindex="-1">
-        <span class="label">Work with Baruch</span>
-        <span class="hint">Careers and Collaboration</span>
-      </button>
+        <button id="tab-3" class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-3" tabindex="-1" title="Collaborate">
+          <i class="bi bi-people nav-icon"></i>
+          <span class="tab-text">
+            <span class="label">Collaborate</span>
+            <span class="hint">Careers & Partnerships</span>
+          </span>
+        </button>
 
-      <button id="tab-4" class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-4" tabindex="-1">
-        <span class="label">The Future with Baruch</span>
-        <span class="hint">Who we are</span>
-      </button>
+        <button id="tab-4" class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-4" tabindex="-1" title="The Future">
+          <i class="bi bi-compass nav-icon"></i>
+          <span class="tab-text">
+            <span class="label">The Future</span>
+            <span class="hint">Who we are</span>
+          </span>
+        </button>
 
-      <button id="tab-5" class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-5" tabindex="-1">
-        <span class="label">Contact</span>
-        <span class="hint">Get in touch</span>
-      </button>
-    </nav>
+        <button id="tab-5" class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-5" tabindex="-1" title="Contact">
+          <i class="bi bi-envelope nav-icon"></i>
+          <span class="tab-text">
+            <span class="label">Contact</span>
+            <span class="hint">Get in touch</span>
+          </span>
+        </button>
+      </nav>
 
-    <section>
+      <!-- Bottom Actions (Theme + Collapse Buttons) -->
+      <div class="bottom-actions">
+        <div class="divider"></div>
+        
+        <!-- Theme Toggle -->
+        <button class="action-btn" id="themeToggle" aria-label="Toggle Theme" title="Switch Theme">
+          <i class="bi bi-moon-stars nav-icon" id="themeIcon"></i>
+          <span class="tab-text">
+            <span class="label" id="themeLabel">Dark Mode</span>
+          </span>
+        </button>
+
+        <div class="divider"></div>
+
+        <!-- Collapse Button moved below Theme Toggle -->
+        <button class="action-btn" id="collapseToggle" aria-label="Toggle Sidebar Collapse" title="Collapse Sidebar">
+          <i class="bi bi-chevron-left nav-icon" id="collapseIcon"></i>
+          <span class="tab-text">
+            <span class="label">Collapse</span>
+          </span>
+        </button>
+      </div>
+
+    </aside>
+
+    <!-- Main Content Panel Wrapper (Scrolls independently) -->
+    <section class="content-area">
+      
+      <!-- Panel 0: Home -->
       <div id="panel-0" class="panel" role="tabpanel" aria-labelledby="tab-0">
-        <!-- <h2 style="color: #2563eb;">Baruch...</h2> -->
-        <!-- <img src="assets/sustain.jpg" class="small-img"></img> -->
-        <video loop muted autoplay playsinline poster="assets/sustain.jpg" class="video">
-          <source src="assets/intro_video.mp4" type="video/mp4">
-        </video>
-      </div>
-      <div id="panel-1" class="panel" role="tabpanel" aria-labelledby="tab-1">
-        <h2 style="color: #2563eb;">What we do...</h2>
-        <br>
-        <h3><strong style="color: #2563eb;">Baruch</strong> is a scientific research and consulting company based in
-          Gothenburg, <span style='color:#005293;'>S</span><span style='color:#2A667A;'>w</span><span
-            style='color:#547A62;'>e</span><span style='color:#7F8E49;'>d</span><span
-            style='color:#A9A231;'>e</span><span style='color:#D3B618;'>n</span>.<br>
-          <br>
-          Our work focuses on integrating <strong style="color: purple">Artificial Intelligence</strong> and <strong
-            style="color: purple">Machine Learning</strong> techniques to advance <strong
-            style="color: rgb(19, 184, 19)">Bioprocess Engineering</strong>.<br>
-          <br>
-          We specialize in bioprocess design, optimization, and automation, leveraging cutting-edge AI/ML tools to to
-          deliver scalable, sustainable, and future-ready solutions.<br>
-          <br>
-          Our work supports process efficiency, resource valorization, and the transition toward a circular
-          bioeconomy.<br>
-        </h3>
-        <!-- <p class="sub">Tip: drop your content here — markdown, images, or embedded demos all work.</p> -->
-      </div>
+        <!-- Inside #panel-0 -->
+        <div class="video-container">
+          <video id="introVideo" loop muted autoplay playsinline poster="assets/sustain.jpg" class="video">
+            <source id="videoSource" src="assets/web_intro_video - Light.mp4" type="video/mp4">
+          </video>
+        </div>
       </div>
 
+      <!-- Panel 1: What we do -->
+      <div id="panel-1" class="panel" role="tabpanel" aria-labelledby="tab-1" hidden>
+        <h2>What we do...</h2>
+        <h3>
+          <strong>Baruch</strong> is a scientific research and consulting company based in Gothenburg, 
+          <span style='color:#005293;'>S</span><span style='color:#2A667A;'>w</span><span style='color:#547A62;'>e</span><span style='color:#7F8E49;'>d</span><span style='color:#A9A231;'>e</span><span style='color:#D3B618;'>n</span>.<br><br>
+          
+          Our work focuses on integrating <strong style="color: #9333ea">Artificial Intelligence</strong> and <strong style="color: #9333ea">Machine Learning</strong> techniques to advance <strong style="color: #16a34a">Bioprocess Engineering</strong>.<br><br>
+          
+          We specialize in bioprocess design, optimization, and automation, leveraging cutting-edge AI/ML tools to deliver scalable, sustainable, and future-ready solutions.<br><br>
+          
+          Our work supports process efficiency, resource valorization, and the transition toward a circular bioeconomy.
+        </h3>
+      </div>
+
+      <!-- Panel 2: Services -->
       <div id="panel-2" class="panel" role="tabpanel" aria-labelledby="tab-2" hidden>
-        <h2 style="color: #2563eb;">Services we offer...</h2>
-        <br>
-        <h3>At <strong style="color: #2563eb;">Baruch</strong>, we offer a blend of scientific knowledge and digital
-          expertise to support your innovation journey.</h3>
-        <h3>
-          <ul>Bioprocess Engineering & Consulting</ul>
-          <ul style="list-style-type:'⚘  ';">
-            <li>Process design, optimization, and scale-up.</li>
-            <li>Biomass conversion and biofuels development.</li>
-            <li>Performance & Accessibility Audits.</li>
-            <li>Fermentation technologies for food, energy, and material applications.</li>
-            <li>Waste valorization and resource efficiency.</li>
-          </ul>
-          </ul>
-          <br>
+        <h2>Services we offer...</h2>
+        <h3>At <strong>Baruch</strong>, we offer a blend of scientific knowledge and digital expertise to support your innovation journey.</h3>
+        
+        <h4 class="service-category">Bioprocess Engineering & Consulting</h4>
+        <ul class="custom-list">
+          <li><i class="bi bi-flower1"></i> Process design, optimization, and scale-up.</li>
+          <li><i class="bi bi-flower1"></i> Biomass conversion and biofuels development.</li>
+          <li><i class="bi bi-flower1"></i> Performance & Accessibility Audits.</li>
+          <li><i class="bi bi-flower1"></i> Fermentation technologies for food, energy, and material applications.</li>
+          <li><i class="bi bi-flower1"></i> Waste valorization and resource efficiency.</li>
+        </ul>
 
-          <ul>Automation & Digital Solutions</ul>
-          <ul style="list-style-type:'⎌  ';">
-            <li>Process automation for improved efficiency and reliability.</li>
-            <li>Data analytics, modeling, and visualization.</li>
-            <li>Machine learning and AI applications in biotechnology and engineering.</li>
-            <li>Simulation and predictive tools for decision-making.</li>
-          </ul>
-          </ul>
+        <h4 class="service-category">Automation & Digital Solutions</h4>
+        <ul class="custom-list">
+          <li><i class="bi bi-cpu"></i> Process automation for improved efficiency and reliability.</li>
+          <li><i class="bi bi-cpu"></i> Data analytics, modeling, and visualization.</li>
+          <li><i class="bi bi-cpu"></i> Machine learning and AI applications in biotechnology and engineering.</li>
+          <li><i class="bi bi-cpu"></i> Simulation and predictive tools for decision-making.</li>
+        </ul>
 
-          <br>
-          <ul>Sustainable Bioeconomy Consulting</ul>
-          <ul style="list-style-type:'♲  ';">
-            <li>Circular economy strategies for industries and municipalities.</li>
-            <li>Techno-economic and environmental assessments.</li>
-            <li>Roadmaps for green innovation and resource recovery.</li>
-            <li>Policy and strategy support for sustainable transitions.</li>
-          </ul>
-          </ul>
+        <h4 class="service-category">Sustainable Bioeconomy Consulting</h4>
+        <ul class="custom-list">
+          <li><i class="bi bi-recycle"></i> Circular economy strategies for industries and municipalities.</li>
+          <li><i class="bi bi-recycle"></i> Techno-economic and environmental assessments.</li>
+          <li><i class="bi bi-recycle"></i> Roadmaps for green innovation and resource recovery.</li>
+          <li><i class="bi bi-recycle"></i> Policy and strategy support for sustainable transitions.</li>
+        </ul>
       </div>
 
+      <!-- Panel 3: Work with us -->
       <div id="panel-3" class="panel" role="tabpanel" aria-labelledby="tab-3" hidden>
-        <h2 style="color: #2563eb;">Work with us...</h2>
-        <h3>At <strong style="color: #2563eb;">Baruch</strong>, we value curiosity, innovation, and problem-solving.
-          <br>
-          <br>
-          We welcome collaborations with researchers, startups, and industries that share our passion for building a
-          sustainable future.
-          <br>
-          <br>
+        <h2>Work with us...</h2>
+        <h3>
+          At <strong>Baruch</strong>, we value curiosity, innovation, and problem-solving.<br><br>
+          We welcome collaborations with researchers, startups, and industries that share our passion for building a sustainable future.<br><br>
           Opportunities include:
-          <ul style="list-style-type:'⎆  ';">
-            <li>Research partnerships.</li>
-            <li>Industry collaborations.</li>
-            <li>Internships and student projects.</li>
-            <li>Joint innovation initiatives.</li>
-          </ul>
-          <br>
-          <br>
-          If you are interested in joining forces with us, we'd love to hear from you.
         </h3>
-      </div>
-
-      <div id="panel-4" class="panel" role="tabpanel" aria-labelledby="tab-4" hidden>
-        <h2 style="color: #2563eb;">Our Mission...</h2>
-        <h3><strong style="color: #2563eb;">Baruch AB</strong> was founded to advance sustainable technologies through
-          scientific expertise and digital innovation.<br>
-          <br>
-          We aim to provide tailored research and consulting to help industries, research institutes, and policy makers
-          unlock the potential of renewable resources and data-driven bioprocesses.
-        </h3>
-        <h3>
-          To design efficient, scalable, and sustainable processes by integrating bioprocess expertise, automation, and
-          AI-driven insights, reducing waste and accelerating the transition to renewable practices.
-        </h3>
+        <ul class="custom-list">
+          <li><i class="bi bi-box-arrow-in-right"></i> Research partnerships.</li>
+          <li><i class="bi bi-box-arrow-in-right"></i> Industry collaborations.</li>
+          <li><i class="bi bi-box-arrow-in-right"></i> Internships and student projects.</li>
+          <li><i class="bi bi-box-arrow-in-right"></i> Joint innovation initiatives.</li>
+        </ul>
         <br>
-        <h2 style="color: #2563eb;">Our Values...</h2>
-        <h3>
-          <ul i class="bi bi-graph-up-arrow"> Innovation
-            <ul>Leveraging creativity and technology to drive meaningful progress.</ul>
-          </ul>
-
-          <ul>♲ Sustainability
-            <ul>Embedding environmental responsibility in every solution.</ul>
-          </ul>
-
-          <ul>✓ Integrity
-            <ul>Upholding transparency, trust, and ethical practices.</ul>
-          </ul>
-
-          <ul>☞ Collaboration
-            <ul>Building partnerships that foster knowledge sharing and growth.</ul>
-          </ul>
-        </h3>
+        <h3>If you are interested in joining forces with us, we'd love to hear from you.</h3>
       </div>
 
-      <div id="panel-5" class="panel" role="tabpanel" aria-labelledby="tab-5" hidden>
-        <h2 style="color: #2563eb;">Contact us...</h2>
-        <h3>We'd love to hear from you.<br>
-        You can use the contact form below to reach us directly.</h3>
-        <div id="duplicate-paragraphs">
-          <h3 class="original-paragraph"><strong style="color: #2563eb;">Baruch AB</strong>
-            <br>
-            Kvillepiren 12,<br>
-            Gothenburg, Sweden, 41779.<br>
-            <a href="https://www.linkedin.com/company/baruch-ab/" target="_blank" rel="noopener noreferrer">
-              <i class="bi bi-linkedin"></i>
-            </a>
-          </h3>
+      <!-- Panel 4: Mission & Values -->
+      <div id="panel-4" class="panel" role="tabpanel" aria-labelledby="tab-4" hidden>
+        <h2>Our Mission...</h2>
+        <h3>
+          <strong>Baruch AB</strong> was founded to advance sustainable technologies through scientific expertise and digital innovation.<br><br>
+          We aim to provide tailored research and consulting to help industries, research institutes, and policy makers unlock the potential of renewable resources and data-driven bioprocesses.<br><br>
+          To design efficient, scalable, and sustainable processes by integrating bioprocess expertise, automation, and AI-driven insights, reducing waste and accelerating the transition to renewable practices.
+        </h3>
+        
+        <h2 style="margin-top: 48px;">Our Values...</h2>
+        <ul class="custom-list">
+          <li><i class="bi bi-graph-up-arrow"></i> <strong>Innovation:</strong> Leveraging creativity and technology to drive meaningful progress.</li>
+          <li><i class="bi bi-recycle"></i> <strong>Sustainability:</strong> Embedding environmental responsibility in every solution.</li>
+          <li><i class="bi bi-check-circle"></i> <strong>Integrity:</strong> Upholding transparency, trust, and ethical practices.</li>
+          <li><i class="bi bi-people"></i> <strong>Collaboration:</strong> Building partnerships that foster knowledge sharing and growth.</li>
+        </ul>
+      </div>
 
-          <br>
-          <h3 class="shifted-paragraph"><strong style="color: #2563eb;">Bahiru Tsegaye Ayalew</strong><br>
-            CEO & Founder, Baruch AB.<br>
-            Email: <a href="mailto:bahiru@baruch.se">bahiru@baruch.se</a><br>
-            Phone: <a href="tel:+46728318144"></a>+46-728318144<br>
-              <a href="https://www.linkedin.com/in/bahiru-tsegaye-5b0432a4" target="_blank" rel="noopener noreferrer">
+      <!-- Panel 5: Contact -->
+      <div id="panel-5" class="panel" role="tabpanel" aria-labelledby="tab-5" hidden>
+        <h2>Contact us...</h2>
+        <h3>We'd love to hear from you.<br>You can use the contact form below to reach us directly.</h3>
+        
+        <div id="duplicate-paragraphs">
+          <div class="contact-block">
+            <h3><strong>Baruch AB</strong><br>
+              Brämaregatan 2B,<br>
+              Gothenburg, Sweden, 41704.<br>
+              <a href="https://www.linkedin.com/company/baruch-ab/" target="_blank" rel="noopener noreferrer" style="font-size: 26px; display: inline-block; margin-top: 12px;">
                 <i class="bi bi-linkedin"></i>
               </a>
             </h3>
+          </div>
+
+          <div class="contact-block">
+            <h3><strong>Bahiru Tsegaye Ayalew</strong><br>
+              CEO & Founder, Baruch AB.<br>
+              Email: <a href="mailto:bahiru@baruch.se">bahiru@baruch.se</a><br>
+              Phone: <a href="tel:+46728318144">+46-728318144</a><br>
+              <a href="https://www.linkedin.com/in/bahiru-tsegaye-5b0432a4" target="_blank" rel="noopener noreferrer" style="font-size: 26px; display: inline-block; margin-top: 12px;">
+                <i class="bi bi-linkedin"></i>
+              </a>
+            </h3>
+          </div>
         </div>
-        <br>
-        <img src="assets/LinkedinCover.png" class="small-img"></img>
+
+        <img src="assets/LinkedinCover.png" class="small-img" alt="LinkedIn Cover" onerror="this.style.display='none'">
+        
+        <!-- Light frame wrapper for Google form to look pristine in dark mode -->
         <div class="iframe-wrapper">
           <iframe
             src="https://docs.google.com/forms/d/e/1FAIpQLSfTavl50p_J79bT7w6VyMRF_W9DE6Nn0KLePH2O9ctlV5AagQ/viewform?embedded=true"
-            width="100%" height="1000" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+            width="100%" height="850" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
         </div>
-        <!-- <p>Please use the form below to contact us directly.</p> -->
-        <h4> We are currenly committed to constantly update our webpage and increase our social media presence.</h4>
+        
+        <h4 style="text-align: center; margin-top: 36px; font-weight: 500; font-size: 16px; color: var(--text-muted);">
+          We are currently committed to constantly updating our webpage and increasing our social media presence.
+        </h4>
       </div>
     </section>
   </main>
 
   <script>
-    // Simple tab switching + keyboard navigation (ArrowLeft/ArrowRight, Home, End, Enter/Space)
+    // Tab switching logic
     (function () {
       const tabs = Array.from(document.querySelectorAll('[role="tab"]'));
       const panels = Array.from(document.querySelectorAll('[role="tabpanel"]'));
 
       function activateTab(tab) {
-        // deactivate all
         tabs.forEach(t => {
           t.setAttribute('aria-selected', 'false');
           t.tabIndex = -1;
         });
         panels.forEach(p => p.hidden = true);
 
-        // activate chosen
         tab.setAttribute('aria-selected', 'true');
         tab.tabIndex = 0;
-        document.getElementById(tab.getAttribute('aria-controls')).hidden = false;
+        
+        const targetPanel = document.getElementById(tab.getAttribute('aria-controls'));
+        targetPanel.hidden = false;
+        
+        // Reset content scroll position
+        document.querySelector('.content-area').scrollTop = 0;
+        
+        // Trigger subtle animation
+        targetPanel.style.animation = 'none';
+        targetPanel.offsetHeight;
+        targetPanel.style.animation = null;
+        
         tab.focus();
       }
 
-      tabs.forEach((tab, i) => {
+      tabs.forEach((tab) => {
         tab.addEventListener('click', () => activateTab(tab));
-
         tab.addEventListener('keydown', (e) => {
           const key = e.key;
           let idx = tabs.indexOf(tab);
-          if (key === 'ArrowRight') { idx = (idx + 1) % tabs.length; activateTab(tabs[idx]); e.preventDefault(); }
-          else if (key === 'ArrowLeft') { idx = (idx - 1 + tabs.length) % tabs.length; activateTab(tabs[idx]); e.preventDefault(); }
+          if (key === 'ArrowDown' || key === 'ArrowRight') { idx = (idx + 1) % tabs.length; activateTab(tabs[idx]); e.preventDefault(); }
+          else if (key === 'ArrowUp' || key === 'ArrowLeft') { idx = (idx - 1 + tabs.length) % tabs.length; activateTab(tabs[idx]); e.preventDefault(); }
           else if (key === 'Home') { activateTab(tabs[0]); e.preventDefault(); }
           else if (key === 'End') { activateTab(tabs[tabs.length - 1]); e.preventDefault(); }
           else if (key === 'Enter' || key === ' ') { activateTab(tab); e.preventDefault(); }
         });
       });
 
-      // ensure initial state is consistent
       const initiallySelected = tabs.find(t => t.getAttribute('aria-selected') === 'true') || tabs[0];
       activateTab(initiallySelected);
     })();
+
+    // Sidebar Collapse Logic (At the bottom now)
+    (function () {
+      const collapseToggle = document.getElementById('collapseToggle');
+      const collapseIcon = document.getElementById('collapseIcon');
+      const sidebar = document.getElementById('sidebar');
+      
+      collapseToggle.addEventListener('click', () => {
+        sidebar.classList.toggle('collapsed');
+        
+        if (sidebar.classList.contains('collapsed')) {
+          collapseIcon.className = 'bi bi-chevron-right nav-icon';
+          collapseToggle.title = 'Expand Sidebar';
+        } else {
+          collapseIcon.className = 'bi bi-chevron-left nav-icon';
+          collapseToggle.title = 'Collapse Sidebar';
+        }
+      });
+    })();
+
+    // Dark / Light Theme Switching
+    // Dark / Light Theme Switching
+(function () {
+  const themeToggle = document.getElementById('themeToggle');
+  const themeIcon = document.getElementById('themeIcon');
+  const themeLabel = document.getElementById('themeLabel');
+  
+  // Video element references
+  const video = document.getElementById('introVideo');
+  const videoSource = document.getElementById('videoSource');
+
+  function changeVideoSource(src) {
+    if (videoSource && video) {
+      // Avoid re-triggering if already playing the same source
+      if (!videoSource.src.includes(encodeURIComponent(src)) && !videoSource.src.includes(src)) {
+        videoSource.src = src;
+        video.load();
+        video.play().catch(() => {}); // Play safely without unhandled promise errors
+      }
+    }
+  }
+
+  function setDark() {
+    document.documentElement.setAttribute('data-theme', 'dark');
+    themeIcon.className = 'bi bi-sun nav-icon';
+    themeLabel.textContent = 'Light Mode';
+    localStorage.setItem('theme', 'dark');
+    
+    // Swap to Dark Video
+    changeVideoSource('assets/web_intro_video - Dark.mp4');
+  }
+
+  function setLight() {
+    document.documentElement.removeAttribute('data-theme');
+    themeIcon.className = 'bi bi-moon-stars nav-icon';
+    themeLabel.textContent = 'Dark Mode';
+    localStorage.setItem('theme', 'light');
+    
+    // Swap to Light Video
+    changeVideoSource('assets/web_intro_video - Light.mp4');
+  }
+
+  const savedTheme = localStorage.getItem('theme');
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+  if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+    setDark();
+  } else {
+    setLight();
+  }
+
+  themeToggle.addEventListener('click', () => {
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    if (isDark) {
+      setLight();
+    } else {
+      setDark();
+    }
+  });
+})();
   </script>
 </body>
-
 </html>
-
-<link rel="apple-touch-icon" href="assets/favicon_io/apple-touch-icon.png">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
