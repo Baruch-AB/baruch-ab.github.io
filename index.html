@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="description" content="A scientific research and consulting company specializing in bioprocess design, optimization, and automation.">
-  <title>Baruch AB | Towards a Sustainable Future</title>
+  <title>Baruch AB</title>
   
   <link rel="icon" href="assets/favicon_io/favicon.ico" />
   <link rel="apple-touch-icon" href="assets/favicon_io/apple-touch-icon.png">
@@ -37,6 +37,7 @@
       --accent-bg: #2563eb;
       --accent-text: #ffffff;
       --accent-glow: rgba(37, 99, 235, 0.25);
+      --card-front-tint: linear-gradient(135deg, rgba(37, 99, 235, 0.14), rgba(16, 185, 129, 0.1) 58%, rgba(15, 23, 42, 0.38));
       
       --tab-hover: rgba(37, 99, 235, 0.08);
       --divider-color: rgba(0, 0, 0, 0.08);
@@ -69,6 +70,7 @@
       --accent-bg: #2563eb;
       --accent-text: #ffffff;
       --accent-glow: rgba(59, 130, 246, 0.4);
+      --card-front-tint: linear-gradient(135deg, rgba(37, 99, 235, 0.3), rgba(20, 184, 166, 0.2) 58%, rgba(2, 6, 23, 0.62));
       
       --tab-hover: rgba(255, 255, 255, 0.06);
       --divider-color: rgba(255, 255, 255, 0.08);
@@ -349,67 +351,112 @@
     }
     .panel h3 strong { font-weight: 600; }
 
+   
     /* =========================================
-   Fluted Glass Frame for Side Images
-   ========================================= */
-.fluted-img-wrapper {
-  position: relative;
-  width: 280px; /* Fixed width matching the side image */
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: var(--shadow);
-  border: 1px solid var(--card-border);
-  flex-shrink: 0;
-  display: flex; /* Ensures stretch alignment works seamlessly */
-}
+       Interactive Media Cards (Image/Video -> List)
+       ========================================= */
+    .interactive-card {
+      position: relative;
+      width: 100%;
+      min-height: 300px;
+      margin-bottom: 24px;
+      border-radius: 18px;
+      border: 1px solid var(--card-border);
+      box-shadow: var(--shadow);
+      background: var(--card-bg);
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s ease, box-shadow 0.3s ease;
+    }
 
-/* Base Image */
-.card-side-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
+    .interactive-card:hover,
+    .interactive-card:focus-visible {
+      transform: translateY(-3px);
+      border-color: var(--accent);
+      box-shadow: 0 14px 32px rgba(0, 0, 0, 0.12);
+      outline: none;
+    }
 
-/* Fluted / Reeded Glass Overlay */
-.fluted-glass-layer {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 2;
-  
-  /* 1. Refraction Blur & High-Contrast Light Distortion */
-  backdrop-filter: blur(10px) contrast(135%) brightness(108%);
-  -webkit-backdrop-filter: blur(10px) contrast(135%) brightness(108%);
+    .card-front {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 2;
+      opacity: 1;
+      visibility: visible;
+      background: var(--card-bg);
+      transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
+    }
 
-  /* 2. Vertical Ribbed Ridges (Light & Shadow Gradient) */
-  background: repeating-linear-gradient(
-    90deg,
-    rgba(255, 255, 255, 0.22) 0px,
-    rgba(255, 255, 255, 0.04) 4px,
-    rgba(0, 0, 0, 0.38) 8px,
-    rgba(255, 255, 255, 0.22) 12px
-  );
-  
-  /* Edge highlight reflection */
-  box-shadow: inset 0 0 15px rgba(255, 255, 255, 0.2);
-  transition: opacity 0.3s ease;
-}
+    .card-front img,
+    .card-front video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      opacity: 1;
+    }
 
-/* Interactive Hover state */
-.fluted-img-wrapper:hover .fluted-glass-layer {
-  backdrop-filter: blur(6px) contrast(120%) brightness(110%);
-  -webkit-backdrop-filter: blur(6px) contrast(120%) brightness(110%);
-}
+    .card-front::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: var(--card-front-tint);
+      pointer-events: none;
+    }
 
-/* Responsive adjustment for small screens */
-@media (max-width: 850px) {
-  .fluted-img-wrapper {
-    width: 100%;
-    height: 180px;
-  }
-}
+    .card-front .card-label {
+      position: absolute;
+      bottom: 16px;
+      left: 16px;
+      z-index: 4;
+      background: rgba(0, 0, 0, 0.65);
+      color: #ffffff;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
 
+    .card-back {
+      position: relative;
+      z-index: 1;
+      opacity: 0;
+      visibility: hidden;
+      padding: 24px;
+      box-sizing: border-box;
+      min-height: 300px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
+    }
+
+    .interactive-card:hover .card-front,
+    .interactive-card.is-active .card-front {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .interactive-card:hover .card-back,
+    .interactive-card.is-active .card-back {
+      opacity: 1;
+      visibility: visible;
+      z-index: 3;
+    }
+
+    .interactive-card .card-back .custom-list {
+      width: min(100%, 760px);
+      margin: 0 auto;
+    }
     /* Video Player Fit */
     .video-container {
       width: 100%;
@@ -678,7 +725,7 @@
   <!-- Simplified Top Bar -->
   <header class="site-header">
     <a href="#" class="logo-link" aria-label="Company Homepage">
-      <img src="assets/logo.png" class="logo-icon" alt="Baruch Logo" onerror="this.style.display='none'">
+          <img src="assets/pics/logo.png" class="logo-icon" alt="Baruch Logo" onerror="this.style.display='none'">
       <span class="company-name">
         <span style='color:#114384;'>B</span><span style='color:#1C4E7A;'>a</span><span style='color:#275A71;'>r</span><span style='color:#336568;'>u</span><span style='color:#3E715F;'>c</span><span style='color:#497C56;'>h</span> 
         <span style='color:#609344;'>A</span><span style='color:#6B9F3B;'>B</span>
@@ -775,8 +822,8 @@
       <div id="panel-0" class="panel" role="tabpanel" aria-labelledby="tab-0">
         <!-- Inside #panel-0 -->
         <div class="video-container">
-          <video id="introVideo" loop muted autoplay playsinline poster="assets/sustain.jpg" class="video">
-            <source id="videoSource" src="assets/web_intro_video - Light.mp4" type="video/mp4">
+          <video id="introVideo" loop muted autoplay playsinline poster="assets/pics/sustain.jpg" class="video">
+            <source id="videoSource" src="assets/hero/web_intro_video - Light.mp4" type="video/mp4">
           </video>
         </div>
       </div>
@@ -798,33 +845,66 @@
 
       <!-- Panel 2: Services -->
       <div id="panel-2" class="panel" role="tabpanel" aria-labelledby="tab-2" hidden>
-        <h2>Services we offer...</h2>
-        <h3>At <strong>Baruch</strong>, we offer a blend of scientific knowledge and digital expertise to support your innovation journey.</h3>
-        
-        <h4 class="service-category">Bioprocess Engineering & Consulting</h4>
-        <ul class="custom-list">
-          <li><i class="bi bi-flower1"></i> Process design, optimization, and scale-up.</li>
-          <li><i class="bi bi-flower1"></i> Biomass conversion and biofuels development.</li>
-          <li><i class="bi bi-flower1"></i> Performance & Accessibility Audits.</li>
-          <li><i class="bi bi-flower1"></i> Fermentation technologies for food, energy, and material applications.</li>
-          <li><i class="bi bi-flower1"></i> Waste valorization and resource efficiency.</li>
-        </ul>
+        <h2>Services at Baruch...</h2>
+        <h3>we offer a blend of scientific knowledge and digital expertise to support your innovation journey.</h3>
 
-        <h4 class="service-category">Automation & Digital Solutions</h4>
-        <ul class="custom-list">
-          <li><i class="bi bi-cpu"></i> Process automation for improved efficiency and reliability.</li>
-          <li><i class="bi bi-cpu"></i> Data analytics, modeling, and visualization.</li>
-          <li><i class="bi bi-cpu"></i> Machine learning and AI applications in biotechnology and engineering.</li>
-          <li><i class="bi bi-cpu"></i> Simulation and predictive tools for decision-making.</li>
-        </ul>
+        <h4 class="service-category">Bioprocess Engineering & Consulting</h4>
+        <div class="interactive-card" role="button" tabindex="0" aria-expanded="false">
+          <div class="card-front">
+            <!-- Change this video: assets/vids/service-1.mp4 -->
+            <video autoplay loop muted playsinline poster="assets/pics/sustain.jpg" aria-label="Bioprocess engineering video">
+              <source src="assets/vids/service-1.mp4" type="video/mp4">
+            </video>
+            <div class="card-label"><i class="bi bi-hand-index-thumb"></i> Hover or tap for details</div>
+          </div>
+          <div class="card-back">
+            <ul class="custom-list">
+              <li><i class="bi bi-gear"></i> Process design, optimization, and scale-up.</li>
+              <li><i class="bi bi-recycle"></i> Biomass conversion and biofuels development.</li>
+              <li><i class="bi bi-patch-check"></i> Performance and accessibility audits.</li>
+              <li><i class="bi bi-droplet"></i> Fermentation technologies for food, energy, and materials.</li>
+              <li><i class="bi bi-arrow-repeat"></i> Waste valorization and resource efficiency.</li>
+            </ul>
+          </div>
+        </div>
+
+        <h4 class="service-category">AI & Machine Learning Solutions</h4>
+        <div class="interactive-card" role="button" tabindex="0" aria-expanded="false">
+          <div class="card-front">
+            <!-- Change this video: assets/vids/service-2.mp4 -->
+            <video autoplay loop muted playsinline poster="assets/pics/sustain.jpg" aria-label="AI and machine learning video">
+              <source src="assets/vids/service-2.mp4" type="video/mp4">
+            </video>
+            <div class="card-label"><i class="bi bi-hand-index-thumb"></i> Hover or tap for details</div>
+          </div>
+          <div class="card-back">
+            <ul class="custom-list">
+              <li><i class="bi bi-cpu"></i> Predictive modeling and digital twins for bioprocesses.</li>
+              <li><i class="bi bi-graph-up"></i> Data-driven process optimization and real-time control.</li>
+              <li><i class="bi bi-diagram-3"></i> Machine learning for strain and media optimization.</li>
+              <li><i class="bi bi-robot"></i> Automation and smart sensor integration.</li>
+            </ul>
+          </div>
+        </div>
 
         <h4 class="service-category">Sustainable Bioeconomy Consulting</h4>
-        <ul class="custom-list">
-          <li><i class="bi bi-recycle"></i> Circular economy strategies for industries and municipalities.</li>
-          <li><i class="bi bi-recycle"></i> Techno-economic and environmental assessments.</li>
-          <li><i class="bi bi-recycle"></i> Roadmaps for green innovation and resource recovery.</li>
-          <li><i class="bi bi-recycle"></i> Policy and strategy support for sustainable transitions.</li>
-        </ul>
+        <div class="interactive-card" role="button" tabindex="0" aria-expanded="false">
+          <div class="card-front">
+            <!-- Change this video: assets/vids/service-3.mp4 -->
+            <video autoplay loop muted playsinline poster="assets/pics/sustain.jpg" aria-label="Sustainable bioeconomy video">
+              <source src="assets/vids/service-3.mp4" type="video/mp4">
+            </video>
+            <div class="card-label"><i class="bi bi-hand-index-thumb"></i> Hover or tap for details</div>
+          </div>
+          <div class="card-back">
+            <ul class="custom-list">
+              <li><i class="bi bi-recycle"></i> Circular economy strategies for industries and municipalities.</li>
+              <li><i class="bi bi-clipboard2-pulse"></i> Techno-economic and environmental assessments.</li>
+              <li><i class="bi bi-signpost-split"></i> Roadmaps for green innovation and resource recovery.</li>
+              <li><i class="bi bi-globe2"></i> Policy and strategy support for sustainable transitions.</li>
+            </ul>
+          </div>
+        </div>
       </div>
 
       <!-- Panel 3: Work with us -->
@@ -835,12 +915,23 @@
           We welcome collaborations with researchers, startups, and industries that share our passion for building a sustainable future.<br><br>
           Opportunities include:
         </h3>
-        <ul class="custom-list">
-          <li><i class="bi bi-box-arrow-in-right"></i> Research partnerships.</li>
-          <li><i class="bi bi-box-arrow-in-right"></i> Industry collaborations.</li>
-          <li><i class="bi bi-box-arrow-in-right"></i> Internships and student projects.</li>
-          <li><i class="bi bi-box-arrow-in-right"></i> Joint innovation initiatives.</li>
-        </ul>
+        <div class="interactive-card" role="button" tabindex="0" aria-expanded="false">
+          <div class="card-front">
+            <!-- Change this video: assets/vids/collab.mp4 -->
+            <video autoplay loop muted playsinline poster="assets/pics/LinkedinCover.png" aria-label="Baruch collaboration video">
+              <source src="assets/vids/collab.mp4" type="video/mp4">
+            </video>
+            <div class="card-label"><i class="bi bi-hand-index-thumb"></i> Hover or tap for details</div>
+          </div>
+          <div class="card-back">
+            <ul class="custom-list">
+              <li><i class="bi bi-box-arrow-in-right"></i> Research partnerships.</li>
+              <li><i class="bi bi-box-arrow-in-right"></i> Industry collaborations.</li>
+              <li><i class="bi bi-box-arrow-in-right"></i> Internships and student projects.</li>
+              <li><i class="bi bi-box-arrow-in-right"></i> Joint innovation initiatives.</li>
+            </ul>
+          </div>
+        </div>
         <br>
         <h3>If you are interested in joining forces with us, we'd love to hear from you.</h3>
       </div>
@@ -855,12 +946,23 @@
         </h3>
         
         <h2 style="margin-top: 48px;">Our Values...</h2>
-        <ul class="custom-list">
-          <li><i class="bi bi-graph-up-arrow"></i> <strong>Innovation:</strong> Leveraging creativity and technology to drive meaningful progress.</li>
-          <li><i class="bi bi-recycle"></i> <strong>Sustainability:</strong> Embedding environmental responsibility in every solution.</li>
-          <li><i class="bi bi-check-circle"></i> <strong>Integrity:</strong> Upholding transparency, trust, and ethical practices.</li>
-          <li><i class="bi bi-people"></i> <strong>Collaboration:</strong> Building partnerships that foster knowledge sharing and growth.</li>
-        </ul>
+        <div class="interactive-card" role="button" tabindex="0" aria-expanded="false">
+          <div class="card-front">
+            <!-- Change this video: assets/vids/future.mp4 -->
+            <video autoplay loop muted playsinline poster="assets/pics/sustain.jpg" aria-label="Sustainable future video">
+              <source src="assets/vids/future.mp4" type="video/mp4">
+            </video>
+            <div class="card-label"><i class="bi bi-hand-index-thumb"></i> Hover or tap for details</div>
+          </div>
+          <div class="card-back">
+            <ul class="custom-list">
+              <li><i class="bi bi-graph-up-arrow"></i> <strong>Innovation:</strong> Leveraging creativity and technology to drive meaningful progress.</li>
+              <li><i class="bi bi-recycle"></i> <strong>Sustainability:</strong> Embedding environmental responsibility in every solution.</li>
+              <li><i class="bi bi-check-circle"></i> <strong>Integrity:</strong> Upholding transparency, trust, and ethical practices.</li>
+              <li><i class="bi bi-people"></i> <strong>Collaboration:</strong> Building partnerships that foster knowledge sharing and growth.</li>
+            </ul>
+          </div>
+        </div>
       </div>
 
       <!-- Panel 5: Contact -->
@@ -891,7 +993,7 @@
           </div>
         </div>
 
-        <img src="assets/LinkedinCover.png" class="small-img" alt="LinkedIn Cover" onerror="this.style.display='none'">
+        <img src="assets/pics/LinkedinCover.png" class="small-img" alt="LinkedIn Cover" onerror="this.style.display='none'">
         
         <!-- Light frame wrapper for Google form to look pristine in dark mode -->
         <div class="iframe-wrapper">
@@ -954,6 +1056,26 @@
       activateTab(initiallySelected);
     })();
 
+    // Interactive service cards reveal on hover and stay open after activation.
+    (function () {
+      const cards = Array.from(document.querySelectorAll('.interactive-card'));
+
+      cards.forEach((card) => {
+        function toggleCard() {
+          const isActive = card.classList.toggle('is-active');
+          card.setAttribute('aria-expanded', String(isActive));
+        }
+
+        card.addEventListener('click', toggleCard);
+        card.addEventListener('keydown', (event) => {
+          if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            toggleCard();
+          }
+        });
+      });
+    })();
+
     // Sidebar Collapse Logic (At the bottom now)
     (function () {
       const collapseToggle = document.getElementById('collapseToggle');
@@ -1002,7 +1124,7 @@
     localStorage.setItem('theme', 'dark');
     
     // Swap to Dark Video
-    changeVideoSource('assets/web_intro_video - Dark.mp4');
+    changeVideoSource('assets/hero/web_intro_video - Dark.mp4');
   }
 
   function setLight() {
@@ -1012,7 +1134,7 @@
     localStorage.setItem('theme', 'light');
     
     // Swap to Light Video
-    changeVideoSource('assets/web_intro_video - Light.mp4');
+    changeVideoSource('assets/hero/web_intro_video - Light.mp4');
   }
 
   const savedTheme = localStorage.getItem('theme');
